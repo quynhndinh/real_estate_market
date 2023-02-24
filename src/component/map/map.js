@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { GoogleKey } from '../../config';
 
 const GoogleMap = () => {
   let map;
@@ -23,7 +24,7 @@ const GoogleMap = () => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDqhaZ9jDF5AIElywZEputMB9p3XTaAqIc&callback=initMap&v=weekly`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&callback=initMap&v=weekly`;
     script.defer = true;
     script.addEventListener('load', initMap);
     document.body.appendChild(script);
