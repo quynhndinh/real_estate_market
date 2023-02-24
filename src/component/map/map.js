@@ -4,10 +4,21 @@ const GoogleMap = () => {
   let map;
 
   const initMap = () => {
-    map = new window.google.maps.Map(document.getElementById("map"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        map = new window.google.maps.Map(document.getElementById("map"), {
+          center: { lat: latitude, lng: longitude },
+          zoom: 8,
+        });
+      },
+      () => {
+        map = new window.google.maps.Map(document.getElementById("map"), {
+          center: { lat: -34.397, lng: 150.644 },
+          zoom: 8,
+        });
+      }
+    );
   }
 
   useEffect(() => {
