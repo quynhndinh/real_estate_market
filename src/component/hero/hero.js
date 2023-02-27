@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import  GoogleMap from "../map/map.js";
 
 const navigation = [
   { name: 'Map', href: '#GoogleMap' },
@@ -112,7 +113,11 @@ export default function Hero() {
           </Dialog.Panel>
         </Dialog>
       </div>
-      <main>
+      <main class= "mt-6">
+
+        <div class= "relative">
+          <div class = "h-screen"><GoogleMap/></div>
+        </div>
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           </div>
