@@ -14,7 +14,7 @@ app.post('/properties', (req, res) => {
       page: '20',
       status_type: 'RecentlySold',
       home_type: 'Houses',
-      soldInLast: '30'
+      soldInLast: '7'
     },
     headers: {
       'X-RapidAPI-Key': '97dbf8c894msh84c2f3bed4f1e62p10524bjsn892d057ec31e',

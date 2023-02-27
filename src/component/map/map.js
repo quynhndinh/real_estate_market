@@ -9,42 +9,54 @@ const GoogleMap = () => {
       const res = await axios.post('http://localhost:3000/properties');
       const propertiesData = res.data;
 
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          const map = new window.google.maps.Map(document.getElementById("map"), {
-            center: { lat: 39.8283, lng: -98.5795 },
-            mapId: "ba4ecb4571892e61",
-            zoom: 9,
-            disableDefaultUI: true,
-          });
+      navigator.geolocation.getCurrentPosition(() => {
+        const map = new window.google.maps.Map(document.getElementById('map'), {
+          center: { lat: 39.8283, lng: -98.5795 },
+          mapId: 'ba4ecb4571892e61',
+          zoom: 5,
+          disableDefaultUI: true,
+        });
 
-          propertiesData.forEach(property => {
-            const { coordinates, price } = property;
-            const lat = parseFloat(coordinates.latitude);
-            const lng = parseFloat(coordinates.longitude);
-            const marker = new window.google.maps.Marker({
-              position: {lat, lng},
-              map: map,
-              title: `$${price}`,
-            });
-          });
-        }
-      );
+      var heatMapData = [];
+      propertiesData.forEach(property => {
+        console.log(property.coordinates.latitude, property.coordinates.longitude);
+        const { coordinates, price } = property;
+        const lat = parseFloat(coordinates.latitude);
+        const lng = parseFloat(coordinates.longitude);
+        heatMapData.push(new window.google.maps.LatLng(lat, lng));
+        });
 
+        const heatmap = new window.google.maps.visualization.HeatmapLayer({
+          data: heatMapData,
+        });
+
+        heatmap.setMap(map);
+      });
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&v=weekly`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GoogleKey}&v=weekly&libraries=visualization`;
     script.defer = true;
-    script.addEventListener('load', initMap);
     document.body.appendChild(script);
+
+    // Create a new Promise that resolves when the Google Maps API has loaded
+    const googleMapsLoaded = new Promise((resolve) => {
+      script.addEventListener('load', () => {
+        resolve();
+      });
+    });
+
+    // Call initMap only when the Google Maps API has loaded
+    googleMapsLoaded.then(() => {
+      initMap();
+    });
   }, []);
 
-  return <div id="map" style={{ height: "950px" }}></div>;
-}
+  return <div id="map" style={{ height: '100%' }}></div>;
+};
 
 export default GoogleMap;
