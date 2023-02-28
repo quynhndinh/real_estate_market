@@ -1,8 +1,10 @@
+import RapidAPI from "market\src\config.js"
 const express = require('express');
 const axios = require("axios");
 const app = express();
 const cors = require('cors');
 app.use(cors());
+
 
 
 app.post('/properties', (req, res) => {
@@ -17,7 +19,7 @@ app.post('/properties', (req, res) => {
       soldInLast: '7'
     },
     headers: {
-      'X-RapidAPI-Key': '97dbf8c894msh84c2f3bed4f1e62p10524bjsn892d057ec31e',
+      'X-RapidAPI-Key': RapidAPI,
       'X-RapidAPI-Host': 'zillow-com1.p.rapidapi.com'
     }
   };
